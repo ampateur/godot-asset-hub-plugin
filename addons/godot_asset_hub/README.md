@@ -1,10 +1,8 @@
 # Godot Asset Hub EditorPlugin
 
-This Godot 4 editor plugin adds a small dock with shortcuts to the live marketplace, the plugin installation guide, and the GitHub repository.
+This Godot 4 `@tool` plugin adds a dock with marketplace links and one-click asset installation.
 
 ## Install
-
-Copy the `addons/godot_asset_hub` directory into your Godot project's `addons/` directory:
 
 ```bash
 cp -R godot-asset-hub-plugin/addons/godot_asset_hub /path/to/your-godot-project/addons/
@@ -12,4 +10,10 @@ cp -R godot-asset-hub-plugin/addons/godot_asset_hub /path/to/your-godot-project/
 
 Then open **Project → Project Settings → Plugins**, enable **Godot Asset Hub**, and use the dock on the right side of the editor.
 
-The plugin has no runtime dependencies and only opens the public website or writes the installation URL to the editor clipboard.
+## Install an asset
+
+Enter an asset ID such as `github-rpg-battle-system` and press **Install asset to project**. The plugin fetches the asset metadata from Ampateur, downloads the HTTPS ZIP to `user://temp_asset.zip`, extracts the selected `archiveSubpath` into `res://addons/imported_assets/<asset-id>/`, and calls the Godot resource filesystem scan.
+
+The extractor rejects absolute paths and `..` traversal entries (ZIP Slip protection). It does not execute any downloaded file. Inspect third-party assets before enabling scripts or importing executable content.
+
+The plugin uses the public API at `https://ampateur.com/api/assets/` and has no runtime dependencies outside Godot 4.
